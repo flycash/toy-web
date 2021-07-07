@@ -7,6 +7,9 @@ func main() {
 	b, c := Fun1("a", 17)
 	println(b)
 	println(c)
+
+	_, d := Fun2("a", "b")
+	println(d)
 }
 
 // Fun0 只有一个返回值，不需要括号括起来
