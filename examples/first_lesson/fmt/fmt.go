@@ -11,4 +11,22 @@ func main() {
 
 	// 这个是直接输出，一般简单程序 DEBUG 会用它输出到一些信息到控制台
 	fmt.Printf("hello, I am %s, I am %d years old \n", name, age)
+
+	replaceHolder()
+}
+
+func replaceHolder() {
+	u := &user{
+		Name: "Tom",
+		Age: 17,
+	}
+	fmt.Printf("v => %v \n", u)
+	fmt.Printf("+v => %+v \n", u)
+	fmt.Printf("#v => %#v \n", u)
+	fmt.Printf("T => %T \n", u)
+}
+
+type user struct {
+	Name string
+	Age int
 }
