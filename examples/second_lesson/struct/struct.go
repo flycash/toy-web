@@ -3,13 +3,14 @@ package main
 import "fmt"
 
 func main() {
-
+	// duck1 是 *ToyDuck
 	duck1 := &ToyDuck{}
 	duck1.Swim()
 
 	duck2 := ToyDuck{}
 	duck2.Swim()
 
+	// duck3 是 *ToyDuck
 	duck3 := new(ToyDuck)
 	duck3.Swim()
 

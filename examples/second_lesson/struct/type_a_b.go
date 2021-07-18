@@ -6,7 +6,7 @@ func main() {
 	fake := FakeFish{}
 	// fake 无法调用原来 Fish 的方法
 	// 这一句会编译错误
-	// fake.Swim()
+	//fake.Swim()
 	fake.FakeSwim()
 
 	// 转换为Fish
