@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 func main() {
 	a := Fun0("Tom")
 	println(a)
@@ -10,6 +12,11 @@ func main() {
 
 	_, d := Fun2("a", "b")
 	println(d)
+
+	// 不定参数后面可以传递任意多个值
+	Fun4("hello", 19, "CUICUI", "DaMing")
+	s := []string{"CUICUI", "DaMing"}
+	Fun4("hello", 19, s...)
 }
 
 // Fun0 只有一个返回值，不需要括号括起来
@@ -38,4 +45,12 @@ func Fun3(a, b, c string, abc, bcd int, p string) (d, e int, g string) {
 	g = "你好"
 	return
 	//return 0, 0, "你好" // 这样也可以
+}
+
+// Fun4 不定参数。不定参数要放在最后面
+func Fun4(a string, b int, names...string)  {
+	// 我们使用的时候可以直接把 names 看做切片
+	for _, name := range names {
+		fmt.Printf("不定参数：%s \n", name)
+	}
 }
