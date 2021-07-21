@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"geektime/toy-web/demo"
+	_ "geektime/toy-web/demo/filters"
 	"geektime/toy-web/pkg"
 	"net/http"
 	"time"
@@ -84,6 +85,9 @@ func main() {
 			return nil
 		})
 
+	// filterNames := ReadFromConfig
+	// 匿名引入之后，就可以在这里按名索引 filter
+	//web.NewSdkHttpServerWithFilterNames("my-server", filterNames...)
 
 }
 

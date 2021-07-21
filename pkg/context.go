@@ -2,6 +2,7 @@ package web
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 )
@@ -54,4 +55,16 @@ func NewContext(w http.ResponseWriter, r *http.Request) *Context {
 		// 一般路径参数都是一个，所以容量1就可以了
 		PathParams: make(map[string]string, 1),
 	}
+}
+
+func newContext() *Context {
+	fmt.Println("create new context")
+	return &Context{
+	}
+}
+
+func (c *Context) Reset(w http.ResponseWriter, r *http.Request) {
+	c.W = w
+	c.R = r
+	c.PathParams = make(map[string]string, 1)
 }

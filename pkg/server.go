@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"sync"
 	"time"
 )
 
@@ -28,6 +29,7 @@ type sdkHttpServer struct {
 	Name    string
 	handler Handler
 	root    Filter
+	ctxPool sync.Pool
 }
 
 func (s *sdkHttpServer) Route(method string, pattern string,
@@ -40,7 +42,11 @@ func (s *sdkHttpServer) Start(address string) error {
 }
 
 func (s *sdkHttpServer) ServeHTTP(writer http.ResponseWriter, request *http.Request)  {
-	c := NewContext(writer, request)
+	c := s.ctxPool.Get().(*Context)
+	defer func() {
+		s.ctxPool.Put(c)
+	}()
+	c.Reset(writer, request)
 	s.root(c)
 }
 
@@ -69,7 +75,22 @@ func NewSdkHttpServer(name string, builders ...FilterBuilder) Server {
 		Name: name,
 		handler: handler,
 		root: root,
+		ctxPool: sync.Pool{New: func() interface {}{
+			return newContext()
+		}},
 	}
 	return res
+}
+
+func NewSdkHttpServerWithFilterNames(name string,
+	filterNames...string) Server {
+	// 这里取出来
+	builders := make([]FilterBuilder, 0, len(filterNames))
+	for _, n := range filterNames {
+		b := GetFilterBuilder(n)
+		builders = append(builders, b)
+	}
+
+	return NewSdkHttpServer(name, builders...)
 }
 
