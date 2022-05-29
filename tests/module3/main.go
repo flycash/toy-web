@@ -54,6 +54,7 @@ func main() {
 		fmt.Println("error in group")
 	}
 	close(shutdownFlag)
+
 	// to see println for debugging
 	time.Sleep(1 * time.Second)
 }
